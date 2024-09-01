@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  ignite-server:
+    image: apacheignite/ignite:2.10.0
+    container_name: ignite-server
+    ports:
+      - "10800:10800"  # Thin clients port
+      - "47500-47502:47500-47502"  # Communication SPI ports
+      - "49112:49112"  # Discovery SPI port
+    environment:
+      - "OPTION_LIBS=ignite-rest-http"  # Enable REST API
+    volumes:
+      - ./ignite-config:/opt/ignite/config
+    command: >
+      /opt/ignite/apache-ignite/bin/ignite.sh
+      /opt/ignite/config/ignite-config.xml
